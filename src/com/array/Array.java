@@ -5,16 +5,23 @@ package com.array;
  * @date2019年10月12日
  */
 public class Array {
-	private int[] items;
-	private int n;
-	private int count;
+	private int[] items;//维护数组
+	private int n;//数组大小
+	private int count;//元素个数
 	
 	public Array(int n){
 		this.items = new int[n];
 		this.n = n;
 		this.count = 0;
 	}
-	
+	//根据下标查找
+	public int find(int index){
+		if(index <0 || index >= count){
+			return 0;
+		}
+		return items[index];
+	}
+	//插入
 	public boolean insert(int index,int value){
 		if(count == n){
 			return false;
@@ -32,7 +39,7 @@ public class Array {
 		count++;
 		return true;
 	}
-	
+	//删除
 	public boolean delete(int index){
 		if(index < 0 || index >= count){
 			return false;
@@ -44,10 +51,7 @@ public class Array {
 		count--;
 		return true;
 	}
-	
-	public int[] getItems(Array array){
-		return array.items;
-	}
+	//数组打印方法
 	public static void print(Array array){
 		int[] items = array.getItems(array);
 		for(int i=0;i<items.length;i++){
@@ -59,7 +63,7 @@ public class Array {
 		}
 		System.out.println();
 	}
-	
+	//测试
 	public static void main(String[] args) {
 		Array array = new Array(10);
 //		System.out.println(array.n);
