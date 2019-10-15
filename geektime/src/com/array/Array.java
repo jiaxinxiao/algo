@@ -53,7 +53,7 @@ public class Array {
 	}
 	//数组打印方法
 	public static void print(Array array){
-		int[] items = array.getItems(array);
+		int[] items = array.items;
 		for(int i=0;i<items.length;i++){
 			if(i == items.length-1){
 				System.out.print(items[i]);
