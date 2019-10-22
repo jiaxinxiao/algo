@@ -8,16 +8,16 @@ package com.chapter3.list;
  * @author jiaxinxiao
  * @date 2019年10月16日
  */
-public class SinglyLinkedList1 {
+public class SingleLinkedListForeach {
 	//返回一个链表的头结点
-	public static Node getHeadNode(){
-		Node headNode = new Node(null, new Node("1", new Node("2", new Node("3", new Node("4", new Node("5", null))))));
+	public static SingleNode getHeadNode(){
+		SingleNode headNode = new SingleNode(null, new SingleNode("1", new SingleNode("2", new SingleNode("3", new SingleNode("4", new SingleNode("5", null))))));
 		return headNode;
 	}
 	//从头结点遍历到第i个结点，取出数据域中的数据
-	public static String getElem(Node headNode,int i){
+	public static String getElem(SingleNode headNode,int i){
 		int j = 1;//计数器
-		Node p = headNode.next; //p指针指向链表的第一个结点
+		SingleNode p = headNode.next; //p指针指向链表的第一个结点
 		while(p != null && j<i){
 			p = p.next;
 			j++;
