@@ -4,18 +4,18 @@ package com.chapter3.list;
  * @author jiaxinxiao
  * @date 2019年10月21日
  */
-public class SinglyLinkedList2 {
+public class SingleLinkedListInsertAndDelete {
 	//返回一个链表的头结点
-	public static Node getHeadNode(){
-		Node headNode = new Node(null, new Node("1", new Node("2", new Node("3", new Node("4", new Node("5", null))))));
+	public static SingleNode getHeadNode(){
+		SingleNode headNode = new SingleNode(null, new SingleNode("1", new SingleNode("2", new SingleNode("3", new SingleNode("4", new SingleNode("5", null))))));
 		return headNode;
 	}
 	//单链表插入结点
-	public static Node listInsert(Node headNode,Node insertNode,int i) {
+	public static SingleNode listInsert(SingleNode headNode,SingleNode insertNode,int i) {
 		if(insertNode == null){
 			System.out.println("请输入合法的插入结点");
 		}
-		Node p = headNode.next;//指针p指向第一个结点
+		SingleNode p = headNode.next;//指针p指向第一个结点
 		int j = 1;
 		while(p != null && j<i){
 			p = p.next;
@@ -30,7 +30,7 @@ public class SinglyLinkedList2 {
 			return null;
 		}
 		//记录插入的结点
-		Node result = insertNode;
+		SingleNode result = insertNode;
 		//p现在位于第i个结点，插入结点
 		insertNode.next = p.next;
 		p.next = insertNode;
@@ -42,9 +42,9 @@ public class SinglyLinkedList2 {
 	 * @param i 删除第i个结点
 	 * @return
 	 */
-	public static Node listDelete(Node headNode,int i){
+	public static SingleNode listDelete(SingleNode headNode,int i){
 		int j = 1;//计数器
-		Node p = headNode.next;//初始化指针p指向第一个结点
+		SingleNode p = headNode.next;//初始化指针p指向第一个结点
 		if(i<j){
 			return null;
 		}
@@ -58,7 +58,7 @@ public class SinglyLinkedList2 {
 			j++;
 		}
 		//将第i个元素赋值给q
-		Node q = p.next;
+		SingleNode q = p.next;
 		if(p == null || q == null){
 			System.out.println("第i个元素不存在");
 		}
@@ -71,11 +71,11 @@ public class SinglyLinkedList2 {
 		return q;
 	}
 	//遍历链表
-	public static void forEachList(Node headNode){
+	public static void forEachList(SingleNode headNode){
 		if(headNode == null){
 			System.out.println("请勿传入空链表");
 		}
-		Node p = headNode;
+		SingleNode p = headNode;
 		while(p != null){
 			p = p.next;
 			if(p != null){
@@ -85,14 +85,14 @@ public class SinglyLinkedList2 {
 		System.out.println();
 	}
 	public static void main(String[] args) {
-		Node headNode = getHeadNode();
+		SingleNode headNode = getHeadNode();
 		forEachList(headNode);
-		Node insertNode = new Node("insert", null);
+		SingleNode insertNode = new SingleNode("insert", null);
 		forEachList(headNode);
-		insertNode = new Node("insert2", null);
+		insertNode = new SingleNode("insert2", null);
 		listInsert(headNode,insertNode,4);
 		forEachList(headNode);
-		insertNode = new Node("insert3", null);
+		insertNode = new SingleNode("insert3", null);
 		listInsert(headNode,insertNode,7);
 		forEachList(headNode);
 	}
