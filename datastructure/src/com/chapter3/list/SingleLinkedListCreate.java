@@ -47,6 +47,7 @@ public class SingleLinkedListCreate {
 	public static void print(SingleLinkedList l){
 		if(l == null || l.getSize() <= 0){
 			System.out.println("无效单链表");
+			return;
 		}
 		//获取size
 		int size = l.getSize();
