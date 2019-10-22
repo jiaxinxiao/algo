@@ -1,0 +1,35 @@
+package com.chapter3.list;
+/**
+ * 单链表整表删除
+ * @author jiaxinxiao
+ * @date 2019年10月22日
+ */
+public class SingleLinkedListDelete {
+	//释放结点
+	public static void free(SingleNode node){
+		node.data = null;
+		node.next = null;
+		node = null;
+	}
+	//单链表删除
+	public static void clearList(SingleLinkedList l){
+		//释放结点指针
+		SingleNode p = l.getHeadNode();
+		//移动指针
+		SingleNode q = null;
+		while(p != null){
+			q = p.next;
+			free(p);
+			p = q;
+		}
+		l.setSize(0);
+		l = null;
+	}
+	//测试
+	public static void main(String[] args) {
+		SingleLinkedList l = new SingleLinkedList(new SingleNode(null,null),0);
+		SingleLinkedListCreate.createListHead(l, 10);
+		clearList(l);
+		SingleLinkedListCreate.print(l);
+	}
+}
