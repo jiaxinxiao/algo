@@ -22,4 +22,20 @@ public class LinkedListUtil {
 		}
 		return i;
 	}
+	//静态链表打印方法
+	public static void print(StaticLinkedList l){
+		int size = l.getSize();
+		StaticNode[] array = l.getStaticArray();
+		int cur = array[size-1].getCur();
+//		boolean flag = true;
+		int i = 1;//计数
+		while(cur != 0){
+			System.out.println("打印第"+i+"个元素："+array[cur].getData());
+			cur = array[cur].getCur();
+//			if(cur == 0){
+//				break;
+//			}
+			++i;
+		}
+	}
 }
