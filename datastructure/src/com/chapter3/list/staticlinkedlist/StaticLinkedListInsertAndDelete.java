@@ -7,7 +7,7 @@ import com.chapter3.list.util.LinkedListUtil;
  * @author jiaxinxiao
  * @date 2019年10月23日
  */
-public class StaticLinkedListInsert {
+public class StaticLinkedListInsertAndDelete {
 	//在l的第i个位置之前插入element
 //	public boolean listInsert(StaticLinkedList list,int i,String element){
 //		int j = 0,k = 0;
@@ -43,7 +43,7 @@ public class StaticLinkedListInsert {
 	 * @param element
 	 * @return
 	 */
-	public boolean listInsert(StaticLinkedList list,int i,String element){
+	public static boolean listInsert(StaticLinkedList list,int i,String element){
 		int j = 0,k = 0;
 		k = list.getSize()-1;//最后一个元素下标，也是数组的下标
 		if(i < 0 || i > list.getCount()+1/*这里是在第i个元素之前，所以i的最大值是可以取count+1*/){
@@ -57,15 +57,26 @@ public class StaticLinkedListInsert {
 			//将数据分给此分量的data
 			array[j].setData(element);
 			int l = 0;
-			for(;l<i;l++){//找到第i个元素之前的位置
-				k = array[k].getCur();//记录第i个元素前一个元素的cur  
+			for(;l<i-1;l++){//找到第i个元素之前的位置
+				k = array[k].getCur();//记录第i个元素前一个元素的位置 
 			}
 			//头结点记录空闲空间cur所指向的空闲空间
-//				array[0].setCur(array[l].getCur()); 这一步已经在malloc_SLL函数中实现了
-			array[j].setCur(k);//第i个元素的前一个的cur赋值给新元素
+//			array[0].setCur(array[l].getCur()); 这一步已经在malloc_SLL函数中实现了
+			array[j].setCur(array[k].getCur());//第i个元素的前一个的cur赋值给新元素
 			array[k].setCur(j);//i前一个元素记录新元素的cur
+			//插入元素之后计数
+			list.setCount(list.getCount()+1);
 			return true;
 		}
 		return false;
+	}
+	public static void main(String[] args) {
+		StaticLinkedList l = new StaticLinkedList(15);
+		StaticLinkedListInit.InitList(l);
+		listInsert(l,0,"丁");
+		listInsert(l,1,"丙");
+		listInsert(l, 2, "乙");
+		listInsert(l, 3, "甲");
+		LinkedListUtil.print(l);
 	}
 }
