@@ -70,6 +70,33 @@ public class StaticLinkedListInsertAndDelete {
 		}
 		return false;
 	}
+	/**
+	 * 静态链表删除（删除第i个元素）
+	 * @param l
+	 * @param i
+	 * @return
+	 */
+	public static boolean listDelete(StaticLinkedList l,int i){
+		if(i<1 || i>l.getCount()){
+			System.out.println("下标不合法");
+			return false;
+		}
+		int k = l.getSize()-1;//获取末尾下标
+		StaticNode[] space = l.getStaticArray();
+		int j = 1;
+		//获取i的前一个元素的下标
+		for(;j<i;j++){
+			k = space[k].getCur();
+		}
+		j = space[k].getCur();//获取第i个元素的下标
+		//将第i-1个元素的cur指向第i个元素所指的下标
+		space[k].setCur(space[j].getCur());
+		//释放第i个元素，将第i个元素的坐标j传入
+		LinkedListUtil.free_SLL(l, j);
+		//元素
+		l.setCount(l.getCount()-1);
+		return true;
+	}
 	public static void main(String[] args) {
 		StaticLinkedList l = new StaticLinkedList(15);
 		StaticLinkedListInit.InitList(l);
@@ -77,6 +104,15 @@ public class StaticLinkedListInsertAndDelete {
 		listInsert(l,1,"丙");
 		listInsert(l, 2, "乙");
 		listInsert(l, 3, "甲");
+		LinkedListUtil.print(l);
+		System.out.println("-------------测试删除----------------");
+		listDelete(l, 1);
+		LinkedListUtil.print(l);
+		System.out.println("-------------测试删除----------------");
+		listDelete(l, 2);
+		LinkedListUtil.print(l);
+		System.out.println("-------------测试删除----------------");
+		listDelete(l, 1);
 		LinkedListUtil.print(l);
 	}
 }
