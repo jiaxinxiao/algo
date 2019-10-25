@@ -9,8 +9,12 @@ import com.chapter3.list.staticlinkedlist.StaticNode;
  * @date 2019年10月22日
  */
 public class LinkedListUtil {
-	//静态链表结点释放
-	//备用链表获取可用空间，头结点cur所指向的空间就是可用分量
+	/**
+	 * 静态链表结点释放
+	 * 备用链表获取可用空间，头结点cur所指向的空间就是可用分量
+	 * @param l
+	 * @return
+	 */
 	public static int malloc_SLL(StaticLinkedList l){
 		//获取静态链表维护的数组
 		StaticNode[] space = l.getStaticArray();
@@ -21,6 +25,16 @@ public class LinkedListUtil {
 			space[0].setCur(space[i].getCur());
 		}
 		return i;
+	}
+	/**
+	 * 将下标为k的元素回收至备用链表
+	 * @param l
+	 * @param k
+	 */
+	public static void free_SLL(StaticLinkedList l,int k){
+		StaticNode[] space = l.getStaticArray();
+		space[k].setCur(space[0].getCur());
+		space[0].setCur(k);
 	}
 	//静态链表打印方法
 	public static void print(StaticLinkedList l){
@@ -38,4 +52,22 @@ public class LinkedListUtil {
 			++i;
 		}
 	}
+	//返回L中数据元素的个数
+	public int listLength(StaticLinkedList l){
+		if(l == null){
+			return -1;
+		}
+		StaticNode[] space = l.getStaticArray();
+		if(space == null){
+			return -1;
+		}
+		int i = space[l.getSize()-1].getCur();
+		int j = 0;
+		while(i != 0){
+			i = space[i].getCur();
+			++j;
+		}
+		return j;
+	}
+	
 }
