@@ -1,0 +1,203 @@
+package com.chapter3.list.doublelinkedlist;
+/**
+ * 双向循环列表api实现
+ * @author jiaxinxiao
+ * @date 2019年10月25日
+ */
+public class DulCirLinkedList {
+	private DulNode headNode;
+	public DulCirLinkedList(){
+		this.headNode = new DulNode();
+	}
+	/**
+	 * 获取双向循环链表长度
+	 * @param headNode
+	 * @return
+	 */
+	public int listLength(){
+		//传入为null 
+		if(headNode == null){
+			return -1;
+		}
+		DulNode p = headNode.getNext();
+		//只有头结点  链表长度为0
+		if(p == null){
+			return 0;
+		}
+		//计数器
+		int i = 0;
+		while(p != headNode){
+			i++;
+			p = p.getNext();
+		}
+		return i;
+	}
+	/**
+	 * 获取第i个元素 O(n)
+	 * @param headNode
+	 * @param i
+	 * @return
+	 */
+	public DulNode getElem(int i){
+		//如果返回第0个元素/结点，直接返回headNode
+		if(i == 0){
+			return headNode;
+		}
+		int size = this.listLength();
+		if(i<1 || i>size){
+			return null;
+		}
+		DulNode e = headNode;
+		for(int j = 1;j<=i;j++){
+			e = e.getNext();
+		}
+		return e;
+	}
+	/**
+	 * 获取元素的位置
+	 * 最好O(1)
+	 * 最坏O(n)
+	 * 平均O(n)
+	 * @param data
+	 * @return
+	 */
+	public int locateElem(DulNode node){
+		if(node == null || this.listLength()<=0){
+			return -1;
+		}
+		int i = 1;
+		DulNode p = headNode.getNext();
+		while(p != headNode){
+			if(node == p){
+				break;
+			}
+			p = p.getNext();
+			++i;
+		}
+		return i;
+	}
+	/**
+	 * 双向循环链表 向第i个结点之后插入一个结点
+	 * @param node
+	 * @param i
+	 * @return
+	 */
+	public boolean insert(DulNode node,int i){
+		return this.insert(node, i, Pointer.next);
+	} 
+	/**
+	 * 双向循环链表 向第i个结点(之前/之后)插入一个结点
+	 * @param node
+	 * @param i
+	 * @param pointer
+	 * @return
+	 */
+	public boolean insert(DulNode node,int i,Pointer pointer){
+		//获取第i个结点
+		DulNode p = this.getElem(i);
+		if(p == null){
+			System.out.println("插入下标位置不合法");
+			return false;
+		}
+		if(pointer == Pointer.next){
+//			DulNode nextNode = p.getNext();
+//			node.setNext(nextNode);//2
+//			nextNode.setPrior(node);//3
+//			p.setNext(node);//4
+//			node.setPrior(p);//1
+			/**
+			 * 1.插入结点node = s  先搞定s 的前驱和后继
+			 * 2.搞定后结点的前驱
+			 * 3.搞定前结点的后继
+			 * s->prior = p
+			 * s->next = p->next
+			 * p->next->prior = s
+			 * p->next = s
+			 */
+			node.setPrior(p);
+			node.setNext(p.getNext());
+			p.getNext().setPrior(node);
+			p.setNext(node);
+		}else{
+			insert(node, --i,Pointer.next);
+		}
+		return true;
+	}
+	/**
+	 * 删除第i个结点
+	 * @param i
+	 * @return
+	 */
+	public boolean delete(int i){
+		DulNode p = getElem(i);
+		if(p == null){
+			System.out.println("下标不合法");
+			return false;
+		}
+		p.getPrior().setNext(p.getNext());
+		p.getNext().setPrior(p.getPrior());
+		free(p);
+		return true;
+	}
+	public void free(DulNode p){
+		p.setData(null);
+		p.setNext(null);
+		p.setPrior(null);
+	}
+	/**
+	 * 初始化n个元素的双向循环链表 时间复杂度O(n)，空间复杂度O(n)
+	 * @param headNode
+	 * @param size
+	 */
+	public void initDulCirLinkedList(int size){
+		DulNode currentNode = headNode;
+		for(int i =1;i<=size;i++){
+			DulNode node = new DulNode();
+			node.setData(i+"");
+			currentNode.setNext(node);
+			node.setPrior(currentNode);
+			currentNode = node;
+		}
+		currentNode.setNext(headNode);
+		headNode.setPrior(currentNode);
+	}
+	/**
+	 * 双向循环链表打印方法 时间复杂度O(n)
+	 * @param node
+	 */
+	public void print(){
+		System.out.println("---------------------------------");
+		DulNode p = headNode.getNext();
+		int i = 1;
+		while(p != headNode){
+			System.out.println("第"+i+"个结点数据域："+p.getData());
+			p = p.getNext();
+			i++;
+		}
+	}
+	public static void main(String[] args) {
+		DulCirLinkedList list = new DulCirLinkedList();
+		list.initDulCirLinkedList(10);
+		list.print();
+//		System.out.println("链表长度为："+list.listLength());
+//		System.out.println("第5个元素为："+list.getElem(5).getData());
+//		System.out.println(list.locateElem(list.getElem(5)));
+//		list.insert(null, 0, Pointer.next);
+		DulNode node = new DulNode("jiaxinxiao");
+		list.insert(node, 1);
+		list.print();
+		node = new DulNode("xiaoming");
+		list.insert(node, 2, Pointer.prior);
+		list.print();
+		node = new DulNode("first");
+		list.insert(node, 1, Pointer.prior);
+		list.print();
+		node = new DulNode("last");
+		list.insert(node, 13);
+		list.print();
+		list.delete(3);
+		list.print();
+		list.delete(12);
+		list.print();
+	}
+}
