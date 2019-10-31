@@ -1,10 +1,12 @@
 package com.chapter3.stackandqueue.arrayqueue;
 /**
- * 循环队列实现
+ * 循环队列实现（重点）
  * 头尾相接的顺序存储结构的队列叫作循环队列
  * 是否空队的判断条件  tail == head
  * 队满条件（始终保留一个空闲空间）
  * (tail+1)%size == head
+ * 循环队列实现了以顺序结构为基础实现的栈
+ * 将插入与删除的时间复杂度从O(n)降为O(1)
  * @author jiaxinxiao
  * @date 2019年10月29日
  */
